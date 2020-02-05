@@ -147,6 +147,22 @@ public class RegistrationActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(firebaseUser != null)
+        {
+            Intent homeIntent = new Intent(RegistrationActivity.this, MainActivity.class);
+            startActivity(homeIntent);
+            finish();
+        }
+
+
+    }
+
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
