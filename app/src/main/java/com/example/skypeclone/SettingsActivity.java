@@ -271,13 +271,13 @@ public class SettingsActivity extends AppCompatActivity {
 
                         if(dataSnapshot.exists())
                         {
-                            String imageDb = dataSnapshot.child("image").getValue().toString();
-                            String nameDb = dataSnapshot.child("name").getValue().toString();
-                            String bioDb = dataSnapshot.child("status").getValue().toString();
-
-                            userNameET.setText(nameDb);
-                            userBioEt.setText(bioDb);
-                            Picasso.get().load(imageDb).placeholder(R.drawable.profile_image).into(profileImageView);
+//                            String imageDb = dataSnapshot.child("image").getValue().toString();
+//                            String nameDb = dataSnapshot.child("name").getValue().toString();
+//                            String bioDb = dataSnapshot.child("status").getValue().toString();
+//
+//                            userNameET.setText(nameDb);
+//                            userBioEt.setText(bioDb);
+//                            Picasso.get().load(imageDb).placeholder(R.drawable.profile_image).into(profileImageView);
                         }
 
                     }

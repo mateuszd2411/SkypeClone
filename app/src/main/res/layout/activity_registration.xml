@@ -98,4 +98,65 @@
         android:textColor="@android:color/white"/>
 
 
+    <EditText
+        android:id="@+id/login_email"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:hint="write your email here"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/darker_gray"
+        android:inputType="textEmailAddress"
+        android:singleLine="true"
+        android:layout_below="@+id/continueNextButton"
+        android:backgroundTint="@android:color/white"/>
+
+
+    <EditText
+        android:id="@+id/login_password"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:hint="write your password here"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/darker_gray"
+        android:inputType="textPassword"
+        android:singleLine="true"
+        android:layout_below="@+id/login_email"
+        android:backgroundTint="@android:color/white"/>
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/login_password"
+        android:layout_centerHorizontal="true"
+        android:text="Login with email"
+        android:textAllCaps="false"
+        android:layout_marginTop="10dp"
+        android:textSize="15dp"
+        android:background="@android:color/holo_purple"
+        android:textColor="@android:color/white"/>
+
+
+
+    <TextView
+        android:id="@+id/need_new_account_link"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Already have an account? \n Click here"
+        android:textStyle="bold"
+        android:layout_marginBottom="25dp"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:layout_alignParentBottom="true"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
+
+
+
+
+
 </RelativeLayout>
