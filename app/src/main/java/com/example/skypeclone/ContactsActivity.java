@@ -110,6 +110,8 @@ public class ContactsActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        validateUser();
+
         FirebaseRecyclerOptions<Contacts> options
                 = new FirebaseRecyclerOptions.Builder<Contacts>()
                 .setQuery(contactsRef.child(currentUserId), Contacts.class)
@@ -137,6 +139,18 @@ public class ContactsActivity extends AppCompatActivity {
 
                         }
 
+                        holder.callBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                Intent callingIntent = new Intent(ContactsActivity.this, CallingActivity.class);
+                                callingIntent.putExtra("visit_user_id", listUserId);
+                                startActivity(callingIntent);
+
+
+                            }
+                        });
+
                     }
 
                     @Override
@@ -160,6 +174,8 @@ public class ContactsActivity extends AppCompatActivity {
 
     }
 
+
+
     public static class ContactsViewHolder extends RecyclerView.ViewHolder
     {
 
@@ -176,6 +192,33 @@ public class ContactsActivity extends AppCompatActivity {
             profileImageView = itemView.findViewById(R.id.image_contact);
 
         }
+    }
+
+    private void validateUser() {
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+
+        reference.child("Users").child(currentUserId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if(!dataSnapshot.exists())
+                {
+                    Intent settngIntent = new Intent(ContactsActivity.this, SettingsActivity.class);
+                    startActivity(settngIntent);
+                    finish();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
     }
 
 
