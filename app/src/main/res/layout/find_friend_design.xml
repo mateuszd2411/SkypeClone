@@ -57,7 +57,8 @@
             android:textColor="@android:color/white"
             android:text="Accept Friend Request"
             android:textAllCaps="false"
-            android:textSize="13sp">
+            android:textSize="13sp"
+            android:visibility="gone">
 
         </Button>
 
@@ -76,7 +77,8 @@
             android:textColor="@android:color/white"
             android:text="Cancel Friend Request"
             android:textAllCaps="false"
-            android:textSize="13sp">
+            android:textSize="13sp"
+            android:visibility="gone">
 
         </Button>
     </RelativeLayout>

@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,6 +41,13 @@ public class RegistrationActivity extends AppCompatActivity {
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private ProgressDialog loadingBar;
 
+    //Login with email
+    private Button LoginButton;
+    private EditText UserEmail, UserPassword;
+    private TextView NeedNewAccountLink;
+    private FirebaseUser currentUser1;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,12 +55,85 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
         mAuth =FirebaseAuth.getInstance();
+        currentUser1 = mAuth.getCurrentUser();
         loadingBar = new ProgressDialog(this);
 
         phoneText = findViewById(R.id.phoneText);
         codeText = findViewById(R.id.codeText);
         continueAndNextBtn = findViewById(R.id.continueNextButton);
         relativeLayout = findViewById(R.id.phoneAuth);
+
+        //Login with email
+        LoginButton = findViewById(R.id.login_button);
+        UserEmail = findViewById(R.id.login_email);
+        UserPassword = findViewById(R.id.login_password);
+        NeedNewAccountLink = findViewById(R.id.need_new_account_link);
+
+
+        NeedNewAccountLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent registeremailIntent = new Intent(RegistrationActivity.this, RegisterEmailActivity.class);
+                startActivity(registeremailIntent);
+
+
+
+            }
+        });
+
+        LoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String email = UserEmail.getText().toString();
+                String password = UserPassword.getText().toString();
+
+                if(TextUtils.isEmpty(email))
+                {
+                    Toast.makeText(RegistrationActivity.this, "Please write your email", Toast.LENGTH_SHORT).show();
+                }
+                if(TextUtils.isEmpty(password))
+                {
+                    Toast.makeText(RegistrationActivity.this, "Please write your password", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    loadingBar.setTitle("Sign In");
+                    loadingBar.setMessage("Please wait...");
+                    loadingBar.setCanceledOnTouchOutside(false);
+                    loadingBar.show();
+
+
+                    mAuth.signInWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+
+                                    if(task.isSuccessful())
+                                    {
+                                        sendUserToMainActivity();
+                                        Toast.makeText(RegistrationActivity.this, "Logged in Successfully", Toast.LENGTH_SHORT).show();
+                                        loadingBar.dismiss();
+                                    }
+                                    else
+                                    {
+                                        String message = task.getException().toString();
+                                        Toast.makeText(RegistrationActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
+                                        loadingBar.dismiss();
+                                    }
+
+                                }
+                            });
+
+                }
+            }
+        });
+
+        /////Login with email
+
+
+
 
         ccp = (CountryCodePicker) findViewById(R.id.ccp);
         ccp.registerCarrierNumberEditText(phoneText);
@@ -148,6 +230,10 @@ public class RegistrationActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        if(currentUser1 != null){
+            sendUserToMainActivity();
+        }
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 

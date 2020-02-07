@@ -260,8 +260,9 @@ public class ProfileActivity extends AppCompatActivity {
 
                         if(task.isSuccessful())
                         {
+                            ////// 8 16min 3s  child("request_type").setValue("received")
                             friendRequestRef.child(receiverUserID).child(senderUserId)
-                                    .child("request_type").setValue("sent")
+                                    .child("request_type").setValue("received")
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
